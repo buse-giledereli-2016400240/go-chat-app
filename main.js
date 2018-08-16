@@ -16,7 +16,6 @@ new Vue({
     created() {
         socket.on("message-sent", (msg) => {
             currDate = new Date();
-            console.log(msg);
             this.messageList.push({
                 username: msg.username,
                 userColor: msg.color,
@@ -28,7 +27,6 @@ new Vue({
         })
         socket.on("joined", (msg) => {
             currDate = new Date();
-            console.log(msg);
             this.messageList.push({
                 username: msg.username,
                 userColor: msg.color,
@@ -37,7 +35,6 @@ new Vue({
             })
             this.usersList.push({
                 username: msg.username,
-                userColor: msg.color,
             })
             var element = document.getElementById('chat-messages');
             element.scrollTop = element.scrollHeight+10; // Auto scroll to the bottom
@@ -50,19 +47,24 @@ new Vue({
                 text: 'left',
                 date: currDate.getHours() + ":" + currDate.getMinutes()
             })
-            //this.usersList = this.usersList.filter(function(item) { 
-                //return item.username !== uName
-            //})
+            this.usersList = this.usersList.filter(function(item) { 
+                return item.username !== uName
+            })
             
             var element = document.getElementById('chat-messages');
             element.scrollTop = element.scrollHeight+10; // Auto scroll to the bottom
+        })
+        socket.on("receiveUserList", (uName) => {
+            this.usersList.push({
+                username: uName
+            })
         })
     },
     methods: {
         sendMessage () {
             if (this.newMsg != '') {
                 socket.emit("message-sent", {username: this.username, message: this.newMsg, color: this.userColor});
-                this.newMsg = ''; // Reset newMsg
+                this.newMsg = ''; 
             }else {
                 alert("You haven't typed a message!");
             }

@@ -21,9 +21,15 @@ func handleConnections(so socketio.Socket) {
 	so.Join("default-chat-room")
 	so.On("joined", func(msg Message) {
 		log.Println("A new user connected")
+
+		for _, value := range usernameMap {
+			so.Emit("receiveUserList", value)
+		}
+
 		usernameMap[so.Id()] = msg.Username
 		so.Emit("joined", msg)
 		so.BroadcastTo("default-chat-room", "joined", msg)
+
 	})
 	so.On("message-sent", func(msg Message) {
 		log.Println("A new message sent")
@@ -31,7 +37,9 @@ func handleConnections(so socketio.Socket) {
 		so.BroadcastTo("default-chat-room", "message-sent", msg)
 	})
 	so.On("disconnection", func() {
-		discUser := usernameMap[so.Id()]
+		key := so.Id()
+		discUser := usernameMap[key]
+		delete(usernameMap, key)
 		so.Emit("userDisconnected", discUser)
 		so.BroadcastTo("default-chat-room", "userDisconnected", discUser)
 	})

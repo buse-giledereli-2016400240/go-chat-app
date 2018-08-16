@@ -12,8 +12,8 @@
             <a class="navbar" href="#"><b>DEVAChat</b></a>
         </nav>
 
-        <div class="card-group row">
-            <div id="chat-app" class="card col-md-9">
+        <div class="card-group row" id="chat-app" >
+            <div class="card col-md-9">
                 <ul id="chat-messages" class="list-group scroll borderless">
                     <li v-if = "joined" v-for="m in messageList" class="list-group-item borderless">
                         <div v-if = "m.text == 'joined'"> 
@@ -51,8 +51,8 @@
         
             <div id="user-list" class="card col-md-3">
                 <ul class="list-group scroll borderless">
-                    <li v-if = "joined" v-for="m in messageList" class="list-group-item borderless">
-                        {{m.username}}
+                    <li v-if = "joined" v-for="u in usersList" class="list-group-item borderless">
+                        <b>{{u.username}}</b>
                     </li>
                 </ul>
             </div>
