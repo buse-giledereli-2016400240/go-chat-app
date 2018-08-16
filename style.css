@@ -27,3 +27,6 @@ a.navbar{
 .input-group {
   height: 9vh;
 }
+.card {
+  display:inline-block;
+}

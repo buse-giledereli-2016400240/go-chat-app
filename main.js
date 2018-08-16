@@ -1,6 +1,6 @@
 const socket = io();
 
-var colors = ['#660066', '#3b5998', '#66cdaa', '#ff0101', '#0105ff', '#009020'];
+var colors = ['#9b009b', '#6189dd', '#66cdaa', '#ff0101', '#0105ff', '#009020', '#ff8300', '#ff0077'];
 var random_color = colors[Math.floor(Math.random() * colors.length)];
 
 new Vue({
@@ -10,6 +10,7 @@ new Vue({
         messageList: [], // A running list of chat messages displayed on the screen
         username: '', // Our username
         userColor: random_color,
+        usersList: [],
         joined: false // True if email and username have been filled in
     },
     created() {
@@ -34,6 +35,10 @@ new Vue({
                 text: 'joined',
                 date: currDate.getHours() + ":" + currDate.getMinutes()
             })
+            this.usersList.push({
+                username: msg.username,
+                userColor: msg.color,
+            })
             var element = document.getElementById('chat-messages');
             element.scrollTop = element.scrollHeight+10; // Auto scroll to the bottom
         })
@@ -45,6 +50,10 @@ new Vue({
                 text: 'left',
                 date: currDate.getHours() + ":" + currDate.getMinutes()
             })
+            //this.usersList = this.usersList.filter(function(item) { 
+                //return item.username !== uName
+            //})
+            
             var element = document.getElementById('chat-messages');
             element.scrollTop = element.scrollHeight+10; // Auto scroll to the bottom
         })
