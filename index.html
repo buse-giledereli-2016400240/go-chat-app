@@ -3,7 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title>DEVAChat</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> 
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
@@ -23,14 +24,16 @@
                             <b>{{m.username}} left chat. </b><sub style="color:#706a6a;">  {{m.date}}</sub>
                         </div>
                         <div v-else>
-                            <span v-bind:style="{ color: m.userColor }"><b>{{m.username}}: </b></span> {{ m.text }} <sub style="color:#706a6a;">  {{m.date}}</sub>
+                            <span v-bind:style="{ color: m.userColor }"><b>{{m.username}}: </b>
+                            </span> {{ m.text }} <sub style="color:#706a6a;">  {{m.date}}</sub>
                         </div>
                     </li>
                 </ul>
                 <div class="row" v-if="joined">
                     <div class="col-lg-12">
                         <div class="input-group input-group-lg">
-                            <input type="text" v-model="newMsg" @keyup.enter="sendMessage" class="form-control input-lg" placeholder="Write message here." required>
+                            <input type="text" v-model="newMsg" @keyup.enter="sendMessage" class="form-control input-lg" 
+                            placeholder="Write message here." required>
                             <span class="input-group-btn">
                                 <button @click.prevent="sendMessage" class="btn btn-default btn-lg" type="submit">Send</button>
                             </span>
@@ -42,8 +45,10 @@
                     <div class="col-lg-7">
                         <div class="input-group input-group-lg">
                             <span class="input-group-btn">
-                                <button @click.prevent="loginchosen = true; entertypechosen = true" class="btn btn-default btn-lg" type="submit">Log In</button>
-                                <button @click.prevent="loginchosen = false; entertypechosen = true" class="btn btn-default btn-lg" type="submit">Sign Up</button>
+                                <button @click.prevent="loginchosen = true; entertypechosen = true" class="btn btn-default btn-lg" 
+                                type="submit">Log In</button>
+                                <button @click.prevent="loginchosen = false; entertypechosen = true" class="btn btn-default btn-lg"
+                                type="submit">Sign Up</button>
                             </span>
                         </div>
                     </div>
@@ -52,7 +57,8 @@
                     <div class="col-lg-12">
                         <div class="input-group input-group-lg">
                             <input type="text" v-model.trim="username" class="form-control input-lg" placeholder="Username">
-                            <input type="password" v-model.trim="password" @keyup.enter="join" class="form-control input-lg" placeholder="Password">
+                            <input type="password" v-model.trim="password" @keyup.enter="join" class="form-control input-lg" 
+                            placeholder="Password">
                             <span class="input-group-btn">
                                 <button @click.prevent="join" class="btn btn-default btn-lg" type="submit">Join</button>
                             </span>
