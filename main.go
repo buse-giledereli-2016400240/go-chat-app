@@ -1,25 +1,36 @@
 package main
 
 import (
-	proto "chat/clientmicroservice/proto"
-	"chat/handler"
-	"fmt"
+	"log"
+	"net/http"
 
-	"github.com/micro/go-micro"
+	"github.com/googollee/go-socket.io"
 )
 
+func handleConnections(so socketio.Socket) {
+	log.Println("A new user connected")
+
+	so.Join("chat_room")
+	//this function is called when messageSent signal is received
+	so.On("messageSent", func(msg string) {
+		log.Println("A new message sent")
+		//the messageSent signal is sent to every online user
+		so.Emit("messageSent", msg)
+		so.BroadcastTo("default-chat-room", "messageSent", msg)
+	})
+}
+
 func main() {
-	service := micro.NewService(
-		micro.Name("go.micro.srv.auth"),
-		micro.Version("latest"),
-	)
-	service.Init()
+	server, err := socketio.NewServer(nil)
 
-	// Register handler
-	proto.RegisterUserServiceHandler(service.Server(), new(handler.Service))
-
-	// Run the server
-	if err := service.Run(); err != nil {
-		fmt.Println(err)
+	if err != nil {
+		log.Fatal(err)
 	}
+
+	server.On("connection", handleConnections)
+
+	http.Handle("/socket.io/", server)
+	http.Handle("/", http.FileServer(http.Dir("./public")))
+	log.Println("Server on port 9000")
+	log.Fatal(http.ListenAndServe(":9000", nil))
 }
