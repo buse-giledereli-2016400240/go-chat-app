@@ -4,29 +4,22 @@ body {
   background: linear-gradient(to right, rgb(220, 225, 235), rgb(210, 220, 240)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   overflow-x: hidden;
 }
-
 #deva{
   background-color: #4e80ca;
 }
-
 a.navbar{
   color: #ffffff; 
   font-size:22px;
 }
-
 .borderless { 
   border-top: 0 none; 
   border: 0;
 }
-
 .scroll {
   min-height: 10vh;
   height: 80vh;
   width: 100%;
   overflow-y: auto;
-}
-.input-group {
-  height: 9vh;
 }
 .card {
   display:inline-block;
