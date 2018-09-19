@@ -5,7 +5,7 @@ body {
   overflow-x: hidden;
 }
 
-nav.navbar{
+#deva{
   background-color: #4e80ca;
 }
 
@@ -16,6 +16,7 @@ a.navbar{
 
 .borderless { 
   border-top: 0 none; 
+  border: 0;
 }
 
 .scroll {
@@ -26,4 +27,18 @@ a.navbar{
 }
 .input-group {
   height: 9vh;
+}
+.card {
+  display:inline-block;
+}
+#users{
+  background-color: #b3c8e7;
+  width: 100%;
+}
+.center {
+  text-align: center;
+  color: #ffffff; 
+}
+.leftborder{
+  border-left: 1px solid #b3c8e7;
 }

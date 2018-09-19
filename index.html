@@ -8,46 +8,73 @@
     </head>
     <body>
         
-        <nav class="navbar navbar-dark">
+        <nav id="deva" class="navbar navbar-dark">
             <a class="navbar" href="#"><b>DEVAChat</b></a>
         </nav>
 
-
-        <div id="chat-app" class="card">
-            <ul id="chat-messages" class="list-group scroll borderless">
-                <li v-if = "joined" v-for="m in messageList" class="list-group-item borderless">
-                    <div v-if = "m.text == 'joined'"> 
-                        <b>{{m.username}} joined chat. </b><sub style="color:#706a6a;">  {{m.date}}</sub>
-                    </div>
-                    <div v-else-if = "m.text == 'left'"> 
+        <div class="card-group row" id="chat-app" >
+            <div class="card col-md-9 borderless">
+                <ul id="chat-messages" class="list-group scroll borderless">
+                    <li v-if = "joined" v-for="m in messageList" class="list-group-item borderless">
+                        <div v-if = "m.text == 'joined'"> 
+                            <b>{{m.username}} joined chat. </b><sub style="color:#706a6a;">  {{m.date}}</sub>
+                        </div>
+                        <div v-else-if = "m.text == 'left'"> 
                             <b>{{m.username}} left chat. </b><sub style="color:#706a6a;">  {{m.date}}</sub>
                         </div>
-                    <div v-else>
-                        <span v-bind:style="{ color: m.userColor }"><b>{{m.username}}: </b></span> {{ m.text }} <sub style="color:#706a6a;">  {{m.date}}</sub>
+                        <div v-else>
+                            <span v-bind:style="{ color: m.userColor }"><b>{{m.username}}: </b></span> {{ m.text }} <sub style="color:#706a6a;">  {{m.date}}</sub>
+                        </div>
+                    </li>
+                </ul>
+                <div class="row" v-if="joined">
+                    <div class="col-lg-12">
+                        <div class="input-group input-group-lg">
+                            <input type="text" v-model="newMsg" @keyup.enter="sendMessage" class="form-control input-lg" placeholder="Write message here." required>
+                            <span class="input-group-btn">
+                                <button @click.prevent="sendMessage" class="btn btn-default btn-lg" type="submit">Send</button>
+                            </span>
+                        </div>
                     </div>
-                </li>
-            </ul>
-            <div class="row" v-if="joined">
-                <div class="col-lg-12">
-                    <div class="input-group input-group-lg">
-                        <input type="text" v-model="newMsg" @keyup.enter="sendMessage" class="form-control input-lg" placeholder="Write message here." required>
-                        <span class="input-group-btn">
-                            <button @click.prevent="sendMessage" class="btn btn-default btn-lg" type="submit">Send</button>
-                        </span>
+                </div>
+                <div class="row" v-else-if="!entertypechosen">
+                    <div class="col-lg-5"></div>
+                    <div class="col-lg-7">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-btn">
+                                <button @click.prevent="loginchosen = true; entertypechosen = true" class="btn btn-default btn-lg" type="submit">Log In</button>
+                                <button @click.prevent="loginchosen = false; entertypechosen = true" class="btn btn-default btn-lg" type="submit">Sign Up</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" v-else-if="!joined">
+                    <div class="col-lg-12">
+                        <div class="input-group input-group-lg">
+                            <input type="text" v-model.trim="username" class="form-control input-lg" placeholder="Username">
+                            <input type="password" v-model.trim="password" @keyup.enter="join" class="form-control input-lg" placeholder="Password">
+                            <span class="input-group-btn">
+                                <button @click.prevent="join" class="btn btn-default btn-lg" type="submit">Join</button>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row" v-if="!joined">
-                <div class="col-lg-12">
-                    <div class="input-group input-group-lg">
-                        <input type="text" v-model.trim="username" @keyup.enter="join" class="form-control input-lg" placeholder="Username">
-                        <span class="input-group-btn">
-                            <button @click.prevent="join" class="btn btn-default btn-lg" type="submit">Join</button>
-                        </span>
+        
+            <div id="user-list" class="card col-md-3">
+                <nav id="users" class="navbar navbar-light">
+                    <div class="center">
+                        <b>Online users</b>
                     </div>
-                </div>
+                </nav>
+                <ul class="list-group scroll leftborder">
+                    <li v-if = "joined" v-for="u in usersList" class="list-group-item borderless">
+                        <b>{{u.username}}</b>
+                    </li>
+                </ul>
             </div>
         </div>
+        
                       
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
